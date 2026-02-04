@@ -40,12 +40,21 @@
 
             <!-- Sign Up form -->
             <form class="mt-8" [formGroup]="signUpForm" #signUpNgForm="ngForm">
-                <!-- Name field -->
+                <!-- First Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Full name</mat-label>
-                    <input id="name" matInput [formControlName]="'name'" />
-                    @if (signUpForm.get('name').hasError('required')) {
-                        <mat-error> Full name is required </mat-error>
+                    <mat-label>First name</mat-label>
+                    <input id="firstName" matInput [formControlName]="'firstName'" />
+                    @if (signUpForm.get('firstName').hasError('required')) {
+                        <mat-error> First name is required </mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Last Name field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Last name</mat-label>
+                    <input id="lastName" matInput [formControlName]="'lastName'" />
+                    @if (signUpForm.get('lastName').hasError('required')) {
+                        <mat-error> Last name is required </mat-error>
                     }
                 </mat-form-field>
 
@@ -97,16 +106,6 @@
                         }
                     </button>
                     <mat-error> Password is required </mat-error>
-                </mat-form-field>
-
-                <!-- Company field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
-                    <input
-                        id="company-confirm"
-                        matInput
-                        [formControlName]="'company'"
-                    />
                 </mat-form-field>
 
                 <!-- ToS and PP -->
