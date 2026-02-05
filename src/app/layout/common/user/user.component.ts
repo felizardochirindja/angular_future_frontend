@@ -28,7 +28,6 @@ import { Subject, takeUntil } from 'rxjs';
         MatButtonModule,
         MatMenuModule,
         MatIconModule,
-        NgClass,
         MatDividerModule,
     ],
 })
@@ -98,7 +97,6 @@ export class UserComponent implements OnInit, OnDestroy {
         this._userService
             .update({
                 ...this.user,
-                status,
             })
             .subscribe();
     }
