@@ -92,11 +92,20 @@ export class AuthSignUpComponent implements OnInit {
         // Hide the alert
         this.showAlert = false;
 
-        console.log(this.signUpForm.value);
-        
+        const user: {
+            firstName: string;
+            lastName: string;
+            email: string;
+            password: string;
+        } = {
+            firstName: this.signUpForm.value.firstName,
+            lastName: this.signUpForm.value.lastName,
+            email: this.signUpForm.value.email,
+            password: this.signUpForm.value.password,
+        }
 
         // Sign up
-        this._authService.signUp(this.signUpForm.value).subscribe(
+        this._authService.signUp(user).subscribe(
             (response) => {
                 // Navigate to the confirmation required page
                 this._router.navigateByUrl('/confirmation-required');
