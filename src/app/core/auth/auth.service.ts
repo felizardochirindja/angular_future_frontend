@@ -138,7 +138,19 @@ export class AuthService {
         email: string;
         password: string;
     }): Observable<any> {        
-        return this._httpClient.post('localhost:8000/auth/sign-up', user);
+        const userPayload: {
+            first_name: string;
+            last_name: string;
+            email: string;
+            password: string;
+        } = {
+            first_name: user.firstName,
+            last_name: user.lastName,
+            email: user.email,
+            password: user.password,
+        }
+
+        
     }
 
     /**
