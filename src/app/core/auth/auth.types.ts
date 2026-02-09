@@ -15,3 +15,17 @@ export interface SignUpResponse {
         email: string;
     };
 }
+
+export interface SignInResponse {
+    message: string;
+    status: string;
+    data: {
+        accessToken: string;
+        user: {
+            id: string;
+            first_name: string;
+            last_name: string;
+            email: string;
+        };
+    };
+}
