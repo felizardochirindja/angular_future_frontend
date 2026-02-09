@@ -4,7 +4,7 @@ import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { User } from '../user/user.types';
-import { SignUpPayload, SignUpResponse } from './auth.types';
+import { SignInResponse, SignUpPayload, SignUpResponse } from './auth.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -54,25 +54,32 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {
+    signIn(credentials: { email: string; password: string }): Observable<User> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
 
         return this._httpClient.post('http://localhost:8000/api/v1/auth/sign-in', credentials).pipe(
-            switchMap((response: any) => {
+            switchMap((response: SignInResponse) => {
                 // Store the access token in the local storage            
                 this.accessToken = response.data.accessToken;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
+                const user: User = {
+                    id: response.data.user.id,
+                    firstName: response.data.user.first_name,
+                    lastName: response.data.user.last_name,
+                    email: response.data.user.email,
+                };
+
                 // Store the user on the user service
-                this._userService.user = response.data.user;
+                this._userService.user = user;
 
                 // Return a new observable with the response
-                return of(response);
+                return of(user);
             })
         );
     }
