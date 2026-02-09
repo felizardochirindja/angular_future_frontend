@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { User } from '../user/user.types';
+import { SignUpPayload, SignUpResponse } from './auth.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -137,21 +139,26 @@ export class AuthService {
         lastName: string;
         email: string;
         password: string;
-    }): Observable<any> {
-        const userPayload: {
-            first_name: string;
-            last_name: string;
-            email: string;
-            password: string;
-        } = {
+    }): Observable<User> {
+        const signUpPayload: SignUpPayload = {
             first_name: user.firstName,
             last_name: user.lastName,
             email: user.email,
             password: user.password,
         }
 
-        
-        return this._httpClient.post('http://localhost:8000/api/v1/auth/sign-up', userPayload);
+        return this._httpClient.post('http://localhost:8000/api/v1/auth/sign-up', signUpPayload).pipe(
+            switchMap((response: SignUpResponse) => {
+                const user: User = {
+                    id: response.data.id,
+                    firstName: response.data.first_name,
+                    lastName: response.data.last_name,
+                    email: response.data.email,
+                }
+
+                return of(user);
+            })
+        );
     }
 
     /**

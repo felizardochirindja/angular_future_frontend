@@ -1,11 +1,11 @@
 export interface User {
     id?: string;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    password: string;
+    password?: string;
     avatar?: string;
-    role: {
+    role?: {
         id?: number;
         name: "admin" | "user";
         description?: string;
