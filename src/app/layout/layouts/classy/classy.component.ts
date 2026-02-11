@@ -13,7 +13,6 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
-import { MessagesComponent } from 'app/layout/common/messages/messages.component';
 import { NotificationsComponent } from 'app/layout/common/notifications/notifications.component';
 import { SearchComponent } from 'app/layout/common/search/search.component';
 import { ShortcutsComponent } from 'app/layout/common/shortcuts/shortcuts.component';
@@ -35,7 +34,6 @@ import { Subject, takeUntil } from 'rxjs';
         FuseFullscreenComponent,
         SearchComponent,
         ShortcutsComponent,
-        MessagesComponent,
         RouterOutlet,
     ],
 })
