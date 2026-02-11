@@ -90,9 +90,7 @@ export class AuthService {
     signInUsingToken(): Observable<any> {
         // Sign in using the token
         return this._httpClient
-            .post('api/auth/sign-in-with-token', {
-                accessToken: this.accessToken,
-            })
+            .post('http://localhost:8000/api/v1/auth/refresh-token', {})
             .pipe(
                 catchError(() =>
                     // Return false
@@ -106,15 +104,13 @@ export class AuthService {
                     // in using the token, you should generate a new one on the server
                     // side and attach it to the response object. Then the following
                     // piece of code can replace the token with the refreshed one.
-                    if (response.accessToken) {
-                        this.accessToken = response.accessToken;
-                    }
+                    this.accessToken = response.data.accessToken;
 
                     // Set the authenticated flag to true
                     this._authenticated = true;
 
                     // Store the user on the user service
-                    this._userService.user = response.user;
+                    this._userService.user = response.data.user;
 
                     // Return true
                     return of(true);
@@ -154,7 +150,7 @@ export class AuthService {
             password: user.password,
         }
 
-        return this._httpClient.post('http://localhost:8000/api/v1/auth/sign-up', signUpPayload).pipe(
+        return this._httpClient.post<SignUpResponse>('http://localhost:8000/api/v1/auth/sign-up', signUpPayload).pipe(
             switchMap((response: SignUpResponse) => {
                 const user: User = {
                     id: response.data.id,
